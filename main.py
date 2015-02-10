@@ -2,7 +2,7 @@ from flask import Flask
 app = Flask(__name__)
 
 from serial import Serial
-port = serial.Serial("/dev/ttyAMA0", baudrate = 57600) # timeout?
+port = Serial("/dev/ttyAMA0", baudrate = 57600) # timeout?
 
 
 @app.route("/", methods = ['GET'])
