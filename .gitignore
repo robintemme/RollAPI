@@ -1,0 +1,19 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+### OSX ###
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+### SublimeText ###
+# workspace files are user-specific
+*.sublime-workspace
