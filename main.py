@@ -6,10 +6,21 @@ app = Flask(__name__)
 from serial import Serial
 port = Serial("/dev/ttyAMA0", baudrate = 57600) # timeout?
 
+from Adafruit_DHT import DHT11, read_retry
+sensor = DHT11
+pin = 24
 
-@app.route("/", methods = ['GET'])
+@app.route("/")
 def hello():
     return "It works!"
+
+@app.route("/dht")
+def dht():
+    humidity, temperature = read_retry(sensor, pin)
+    if humidity is not None and temperature is not None:
+        return "Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(temperature, humidity)
+    else:
+        return "Failed to get reading. Try again!"
 
 
 @app.route("/stop", methods = ['GET', 'POST', 'PUT', 'DELETE'])
