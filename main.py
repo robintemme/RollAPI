@@ -12,69 +12,74 @@ pin = 24
 
 @app.route("/")
 def hello():
-    return "It works!"
+    hum, temp = raw_dht()
+    print hum, temp
+    return render_template('index.html', humidity = hum, temperature = temp)
 
 @app.route("/dht")
-def dht():
-    humidity, temperature = read_retry(sensor, pin)
+def api_dht():
+    humidity, temperature = raw_dht()
     if humidity is not None and temperature is not None:
-        return "Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(temperature, humidity)
+        return "{0:0.1f} {1:0.1f}".format(temperature, humidity)
     else:
-        return "Failed to get reading. Try again!"
+        return "Failed to get reading. Try again!", 500
 
+
+def raw_dht():
+    return read_retry(sensor, pin)
 
 @app.route("/stop", methods = ['GET', 'POST', 'PUT', 'DELETE'])
 def stop():
     # send "0"
     # NOTHALT (all methods allowed)
     port.write("0")
-    return "True"
+    return
 
 
 @app.route("/all/up", methods = ['POST'])
 def all_up():
     # send "1"
     port.write("1")
-    return "True"
+    return
 
 @app.route("/all/down", methods = ['POST'])
 def all_down():
     # send "2"
     port.write("2")
-    return "True"
+    return
 
 
 @app.route("/door/up", methods = ['POST'])
 def door_up():
     # send "3"
     port.write("3")
-    return "True"
+    return
 
 @app.route("/door/down", methods = ['POST'])
 def door_down():
     # send "4"
     port.write("4")
-    return "True"
+    return
 
 
 @app.route("/window/up", methods = ['POST'])
 def window_up():
     # send "5"
     port.write("5")
-    return "True"
+    return
 
 @app.route("/window/down", methods = ['POST'])
 def window_down():
     # send "6"
     port.write("6")
-    return "True"
+    return
 
-@app.route("/window/bit", methods = ['POST'])
-def window_bit():
-    # send "7"
-    port.write("7")
-    # just a bit up
-    return "True"
+# @app.route("/window/bit", methods = ['POST'])
+# def window_bit():
+#     # send "7"
+#     port.write("7")
+#     # just a bit up
+#     return
 
 
 if __name__ == "__main__":
