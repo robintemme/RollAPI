@@ -21,9 +21,9 @@
             </thead>
             <tbody>
               <tr class="text-center">
-                <td class="info">{% temperature %}</td>
+                <td class="info">{{ temperature }}</td>
                 <td class="{% if humidity > 50 %}danger{% elif (humidity > 40) and (humidity < 50) %}warning{% else %}success{% endif %}">
-                  {% humidity %}
+                  {{ humidity }}
                 </td>
               </tr>
             </tbody>
