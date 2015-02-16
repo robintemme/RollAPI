@@ -13,7 +13,6 @@ pin = 24
 @app.route("/")
 def hello():
     hum, temp = raw_dht()
-    print hum, temp
     return render_template('index.html', humidity = hum, temperature = temp)
 
 @app.route("/dht")

@@ -16,14 +16,14 @@
             <thead>
               <tr class="active">
                 <th class="text-center">Temperatur</th>
-                <th class="text-center">Luftfeuchtigkeit</th>
+                <th class="text-center">Luftfeuchte</th>
               </tr>
             </thead>
             <tbody>
               <tr class="text-center">
-                <td class="info">{{ temperature }}</td>
+                <td class="info">{{ temperature|int }}°C</td>
                 <td class="{% if humidity > 50.0 %}danger{% elif (humidity > 40.0) and (humidity < 50.0) %}warning{% else %}success{% endif %}">
-                  {{ humidity }}
+                  {{ humidity|int }}%
                 </td>
               </tr>
             </tbody>
