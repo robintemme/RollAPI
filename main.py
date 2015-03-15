@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, current_app
 app = Flask(__name__)
+
+from functools import wraps
+import json
 
 from serial import Serial
 port = Serial("/dev/ttyAMA0", baudrate = 57600) # timeout?
@@ -10,12 +13,25 @@ from Adafruit_DHT import DHT11, read_retry
 sensor = DHT11
 pin = 24
 
+def support_jsonp(f):
+    """Wraps JSONified output for JSONP"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            content = str(callback) + '(' + str(f(*args,**kwargs).data) + ')'
+            return current_app.response_class(content, mimetype='application/javascript')
+        else:
+            return f(*args, **kwargs)
+    return decorated_function
+
 @app.route("/")
 def hello():
     hum, temp = raw_dht()
     return render_template('index.html', humidity = hum, temperature = temp)
 
 @app.route("/dht")
+@support_jsonp
 def api_dht():
     humidity, temperature = raw_dht()
     if humidity is not None and temperature is not None:
