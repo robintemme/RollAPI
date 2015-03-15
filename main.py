@@ -17,10 +17,10 @@ def support_jsonp(f):
     """Wraps JSONified output for JSONP"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        callback = request.args.get('callback', False)
+        callback = request.args.get("callback", False)
         if callback:
-            content = str(callback) + '(' + str(f(*args,**kwargs)) + ')'
-            return current_app.response_class(content, mimetype='application/javascript')
+            content = str(callback) + "(" + str(f(*args,**kwargs)) + ")"
+            return current_app.response_class(content, mimetype="application/javascript")
         else:
             return f(*args, **kwargs)
     return decorated_function
@@ -28,7 +28,7 @@ def support_jsonp(f):
 @app.route("/")
 def hello():
     hum, temp = raw_dht()
-    return render_template('index.html', humidity = hum, temperature = temp)
+    return render_template("index.html", humidity = hum, temperature = temp)
 
 @app.route("/dht")
 @support_jsonp
@@ -43,7 +43,7 @@ def api_dht():
 def raw_dht():
     return read_retry(sensor, pin)
 
-@app.route("/stop", methods = ['GET', 'POST', 'PUT', 'DELETE'])
+@app.route("/stop", methods = ["GET", "POST", "PUT", "DELETE"])
 def stop():
     # send "0"
     # NOTHALT (all methods allowed)
@@ -51,45 +51,45 @@ def stop():
     return
 
 
-@app.route("/all/up", methods = ['POST'])
+@app.route("/all/up", methods = ["POST"])
 def all_up():
     # send "1"
     port.write("1")
     return
 
-@app.route("/all/down", methods = ['POST'])
+@app.route("/all/down", methods = ["POST"])
 def all_down():
     # send "2"
     port.write("2")
     return
 
 
-@app.route("/door/up", methods = ['POST'])
+@app.route("/door/up", methods = ["POST"])
 def door_up():
     # send "3"
     port.write("3")
     return
 
-@app.route("/door/down", methods = ['POST'])
+@app.route("/door/down", methods = ["POST"])
 def door_down():
     # send "4"
     port.write("4")
     return
 
 
-@app.route("/window/up", methods = ['POST'])
+@app.route("/window/up", methods = ["POST"])
 def window_up():
     # send "5"
     port.write("5")
     return
 
-@app.route("/window/down", methods = ['POST'])
+@app.route("/window/down", methods = ["POST"])
 def window_down():
     # send "6"
     port.write("6")
     return
 
-# @app.route("/window/bit", methods = ['POST'])
+# @app.route("/window/bit", methods = ["POST"])
 # def window_bit():
 #     # send "7"
 #     port.write("7")
