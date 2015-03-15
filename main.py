@@ -35,7 +35,7 @@ def hello():
 def api_dht():
     humidity, temperature = raw_dht()
     if humidity is not None and temperature is not None:
-        return "{ temperature: '" + "{0:0.1f}".format(temperature) +  "', humidity: '" + "{0:0.1f}".format(humidity) + "' }"
+        return "{ temperature: '" + "{0:0.0f}".format(temperature) +  "', humidity: '" + "{0:0.0f}".format(humidity) + "' }"
     else:
         return "Failed to get reading. Try again!", 500
 
@@ -48,46 +48,46 @@ def stop():
     # send "0"
     # NOTHALT (all methods allowed)
     port.write("0")
-    return
+    return "{ status: 'done' }" 
 
 
 @app.route("/all/up", methods = ["POST"])
 def all_up():
     # send "1"
     port.write("1")
-    return
+    return "{ status: 'done' }"
 
 @app.route("/all/down", methods = ["POST"])
 def all_down():
     # send "2"
     port.write("2")
-    return
+    return "{ status: 'done' }"
 
 
 @app.route("/door/up", methods = ["POST"])
 def door_up():
     # send "3"
     port.write("3")
-    return
+    return "{ status: 'done' }"
 
 @app.route("/door/down", methods = ["POST"])
 def door_down():
     # send "4"
     port.write("4")
-    return
+    return "{ status: 'done' }"
 
 
 @app.route("/window/up", methods = ["POST"])
 def window_up():
     # send "5"
     port.write("5")
-    return
+    return "{ status: 'done' }"
 
 @app.route("/window/down", methods = ["POST"])
 def window_down():
     # send "6"
     port.write("6")
-    return
+    return "{ status: 'done' }"
 
 # @app.route("/window/bit", methods = ["POST"])
 # def window_bit():
