@@ -19,7 +19,7 @@ def support_jsonp(f):
     def decorated_function(*args, **kwargs):
         callback = request.args.get('callback', False)
         if callback:
-            content = str(callback) + '(' + str(f(*args,**kwargs).data) + ')'
+            content = str(callback) + '(' + str(f(*args,**kwargs)) + ')'
             return current_app.response_class(content, mimetype='application/javascript')
         else:
             return f(*args, **kwargs)
@@ -35,7 +35,7 @@ def hello():
 def api_dht():
     humidity, temperature = raw_dht()
     if humidity is not None and temperature is not None:
-        return "{0:0.1f} {1:0.1f}".format(temperature, humidity)
+        return "{ temperature: " + "{0:0.1f}".format(temperature) +  ", humidity: " + "{1:0.1f}".format(humidity) + "}"
     else:
         return "Failed to get reading. Try again!", 500
 
