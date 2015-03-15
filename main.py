@@ -35,7 +35,7 @@ def hello():
 def api_dht():
     humidity, temperature = raw_dht()
     if humidity is not None and temperature is not None:
-        return "{ temperature: " + "{0:0.1f}".format(temperature) +  ", humidity: " + "{1:0.1f}".format(humidity) + "}"
+        return "{ temperature: '" + "{0:0.1f}".format(temperature) +  "', humidity: '" + "{1:0.1f}".format(humidity) + "' }"
     else:
         return "Failed to get reading. Try again!", 500
 
