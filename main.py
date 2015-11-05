@@ -35,59 +35,58 @@ def hello():
 def api_dht():
     humidity, temperature = raw_dht()
     if humidity is not None and temperature is not None:
-        return "{ temperature: '" + "{0:0.0f}".format(temperature) +  "', humidity: '" + "{0:0.0f}".format(humidity) + "' }"
+        return '{ "temperature": "' + "{0:0.0f}".format(temperature) + '", "humidity": "' + "{0:0.0f}".format(humidity) + '" }', 200
     else:
-        return "Failed to get reading. Try again!", 500
+        return '{ "status": "Could not get reading from sensor!" }', 500
 
 
 def raw_dht():
     return read_retry(sensor, pin)
 
-@app.route("/stop", methods = ["GET", "POST", "PUT", "DELETE"])
+@app.route("/stop", methods = ["POST"])
 def stop():
     # send "0"
-    # NOTHALT (all methods allowed)
     port.write("0")
-    return "{ status: 'done' }" 
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 
 @app.route("/all/up", methods = ["POST"])
 def all_up():
     # send "1"
     port.write("1")
-    return "{ status: 'done' }"
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 @app.route("/all/down", methods = ["POST"])
 def all_down():
     # send "2"
     port.write("2")
-    return "{ status: 'done' }"
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 
 @app.route("/door/up", methods = ["POST"])
 def door_up():
     # send "3"
     port.write("3")
-    return "{ status: 'done' }"
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 @app.route("/door/down", methods = ["POST"])
 def door_down():
     # send "4"
     port.write("4")
-    return "{ status: 'done' }"
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 
 @app.route("/window/up", methods = ["POST"])
 def window_up():
     # send "5"
     port.write("5")
-    return "{ status: 'done' }"
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 @app.route("/window/down", methods = ["POST"])
 def window_down():
     # send "6"
     port.write("6")
-    return "{ status: 'done' }"
+    return current_app.response_class('{ "status": "done" }', mimetype="application/json")
 
 # @app.route("/window/bit", methods = ["POST"])
 # def window_bit():
